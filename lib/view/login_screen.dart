@@ -18,11 +18,13 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: InkWell(
           onTap: () {
-            Utils.toastMessage("No internet connection");
+            // Utils.toastMessage("No internet connection");
+            // Utils.snackBar("No internet connection", context);
+            Utils.flushBarErrorMessage("No Internet Connection", context);
             // Navigator.pushNamed(context, RoutesName.home);
-            // // Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen())) ;
+            // // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())) ;
           },
-          child: const Text('Home Screen '),
+          child: const Text('Click here'),
         ),
       ),
     );

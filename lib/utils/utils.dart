@@ -15,16 +15,37 @@ class Utils {
     );
   }
 
-  static void flushBarErrorMessgae(String message, BuildContext context) {
+  static void flushBarErrorMessage(String message, BuildContext context) {
     showFlushbar(
       context: (context),
       flushbar: Flushbar(
         message: message,
-        backgroundColor: Colors.redAccent,
-        messageColor: Colors.black,
+        backgroundColor: Colors.black,
+        messageColor: Colors.white,
+        forwardAnimationCurve: Curves.decelerate,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.all(15.0),
+        reverseAnimationCurve: Curves.easeInOut,
+        positionOffset: 20,
+        flushbarPosition: FlushbarPosition.TOP,
+        borderRadius: BorderRadius.circular(18.0),
+        icon: const Icon(
+          Icons.error,
+          size: 28,
+          color: Colors.white,
+        ),
         title: "Error",
         duration: const Duration(seconds: 5),
       )..show(context),
+    );
+  }
+
+  static snackBar(String message, BuildContext context) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.redAccent,
+        content: Text(message),
+      ),
     );
   }
 }
