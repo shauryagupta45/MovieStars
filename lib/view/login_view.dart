@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:movie_stars/resources/components/roundButton.dart';
 import 'package:movie_stars/utils/routes/routes_name.dart';
 import 'package:movie_stars/view/home_screen.dart';
+import 'package:movie_stars/view_model/auth_view_model.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/utils.dart';
 
@@ -32,6 +34,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Widget build(BuildContext context) {
+    final authViewMode = Provider.of<AuthViewModel>(context);
     final height = MediaQuery.of(context).size.height * 1;
     return Scaffold(
       appBar: AppBar(
@@ -91,6 +94,7 @@ class _LoginViewState extends State<LoginView> {
             SizedBox(height: height * .1),
             RoundButton(
               title: 'Login',
+              loading: authViewMode.loading,
               onPress: () {
                 if (_emailController.text.isEmpty) {
                   Utils.flushBarErrorMessage('Please enter Email', context);
@@ -101,6 +105,11 @@ class _LoginViewState extends State<LoginView> {
                       'Please Enter a password of atleast 6 characters',
                       context);
                 } else {
+                  Map data = {
+                    'email': _emailController.text.toString(),
+                    'password': _passController.text.toString(),
+                  };
+                  authViewMode.loginApi(data, context);
                   print("Api Hit");
                 }
               },
