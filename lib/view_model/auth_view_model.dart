@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_stars/model/UserModel.dart';
 import 'package:movie_stars/repositories/auth_repository.dart';
 import 'package:movie_stars/utils/routes/routes_name.dart';
 import 'package:movie_stars/utils/utils.dart';
+import 'package:movie_stars/view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 class AuthViewModel with ChangeNotifier {
   final _myRepo = AuthRepo();
@@ -15,7 +18,7 @@ class AuthViewModel with ChangeNotifier {
   }
 
   bool _signUpLoading = false;
-  bool get signUpLoading => signUpLoading;
+  bool get signUpLoading => _signUpLoading;
 
   setSignUpLoading(bool value) {
     _signUpLoading = value;
@@ -30,6 +33,8 @@ class AuthViewModel with ChangeNotifier {
         print(value.toString());
       }
       setLoading(false);
+      final userPref = Provider.of<UserViewModel>(context, listen: false);
+      userPref.saveUser(UserModel(token: value['token'].toString()));
       Navigator.pushNamed(context, RoutesName.home);
     }).onError((error, stackTrace) {
       Utils.flushBarErrorMessage(error.toString(), context);

@@ -4,6 +4,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 
 class Utils {
+  static double averageRating(List<int> rating) {
+    var avg = 0;
+    for (int i = 0; i < rating.length; i++) {
+      avg = avg + rating[i];
+    }
+
+    return double.parse((avg / rating.length).toStringAsFixed(1));
+  }
+
   static toastMessage(String message) {
     // we have given this method static keyword because we are using it globally
     Fluttertoast.showToast(
