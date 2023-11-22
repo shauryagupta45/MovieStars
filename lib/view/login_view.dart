@@ -43,79 +43,88 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              focusNode:
-                  emailFocusNode, //It brings up a keyboard, which explicitly shows '@' sign on it. You don't have to search around for it.
-              decoration: InputDecoration(
-                  labelText: 'Email',
-                  hintText: 'Email',
-                  prefixIcon: const Icon(Icons.email),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide: const BorderSide(color: Colors.grey)),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 3.0)),
-              onFieldSubmitted: (value) {
-                Utils.fieldFocusChange(context, emailFocusNode, passFocusNode);
-              },
-            ), // Email
-            ValueListenableBuilder(
-                valueListenable: _obscurePass,
-                builder: (context, value, child) {
-                  return TextFormField(
-                    controller: _passController,
-                    obscureText: _obscurePass.value,
-                    obscuringCharacter: '*',
-                    focusNode: passFocusNode,
-                    decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'Password',
-                        prefixIcon: const Icon(Icons.lock_outline_sharp),
-                        suffixIcon: InkWell(
-                          onTap: () {
-                            _obscurePass.value = !_obscurePass.value;
-                          },
-                          child: Icon(_obscurePass.value
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            borderSide: const BorderSide(color: Colors.grey)),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 3.0)),
-                  );
-                }),
-            //Pass,
-            SizedBox(height: height * .1),
-            RoundButton(
-              title: 'Login',
-              loading: authViewMode.loading,
-              onPress: () {
-                if (_emailController.text.isEmpty) {
-                  Utils.flushBarErrorMessage('Please enter Email', context);
-                } else if (_passController.text.isEmpty) {
-                  Utils.flushBarErrorMessage('Please enter Password', context);
-                } else if (_passController.text.length < 6) {
-                  Utils.flushBarErrorMessage(
-                      'Please Enter a password of atleast 6 characters',
-                      context);
-                } else {
-                  Map data = {
-                    'email': _emailController.text.toString(),
-                    'password': _passController.text.toString(),
-                  };
-                  authViewMode.loginApi(data, context);
-                  print("Api Hit");
-                }
-              },
-            ),
-          ],
-        ),
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                focusNode:
+                    emailFocusNode, //It brings up a keyboard, which explicitly shows '@' sign on it. You don't have to search around for it.
+                decoration: InputDecoration(
+                    labelText: 'Email',
+                    hintText: 'Email',
+                    prefixIcon: const Icon(Icons.email),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: const BorderSide(color: Colors.grey)),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 3.0)),
+                onFieldSubmitted: (value) {
+                  Utils.fieldFocusChange(
+                      context, emailFocusNode, passFocusNode);
+                },
+              ), // Email
+              ValueListenableBuilder(
+                  valueListenable: _obscurePass,
+                  builder: (context, value, child) {
+                    return TextFormField(
+                      controller: _passController,
+                      obscureText: _obscurePass.value,
+                      obscuringCharacter: '*',
+                      focusNode: passFocusNode,
+                      decoration: InputDecoration(
+                          labelText: 'Password',
+                          hintText: 'Password',
+                          prefixIcon: const Icon(Icons.lock_outline_sharp),
+                          suffixIcon: InkWell(
+                            onTap: () {
+                              _obscurePass.value = !_obscurePass.value;
+                            },
+                            child: Icon(_obscurePass.value
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: const BorderSide(color: Colors.grey)),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 3.0)),
+                    );
+                  }),
+              //Pass,
+              SizedBox(height: height * .1),
+              RoundButton(
+                title: 'Login',
+                loading: authViewMode.loading,
+                onPress: () {
+                  if (_emailController.text.isEmpty) {
+                    Utils.flushBarErrorMessage('Please enter Email', context);
+                  } else if (_passController.text.isEmpty) {
+                    Utils.flushBarErrorMessage(
+                        'Please enter Password', context);
+                  } else if (_passController.text.length < 6) {
+                    Utils.flushBarErrorMessage(
+                        'Please Enter a password of atleast 6 characters',
+                        context);
+                  } else {
+                    Map data = {
+                      'email': _emailController.text.toString(),
+                      'password': _passController.text.toString(),
+                    };
+                    authViewMode.loginApi(data, context);
+                    print("Api Hit");
+                  }
+                },
+              ),
+              SizedBox(height: height * 0.005),
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, RoutesName.signUp);
+                },
+                child: const Text("Don't have an account ? Sign Up here"),
+              )
+            ]),
       ),
     );
   }

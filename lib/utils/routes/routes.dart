@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_stars/utils/routes/routes_name.dart';
 import 'package:movie_stars/view/home_screen.dart';
+import 'package:movie_stars/view/signup_view.dart';
 
 import '../../view/login_view.dart';
 
@@ -14,6 +15,9 @@ class Routes {
       case RoutesName.login:
         return MaterialPageRoute(
             builder: (BuildContext context) => LoginView());
+      case RoutesName.signUp:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => SignUpPage());
       default:
         return MaterialPageRoute(builder: (_) {
           return const Scaffold(
