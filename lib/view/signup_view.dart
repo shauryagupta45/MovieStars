@@ -47,52 +47,63 @@ class _SignUpPageState extends State<SignUpPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextFormField(
-              controller: _emailController,
-              keyboardType: TextInputType.emailAddress,
-              focusNode:
-                  emailFocusNode, //It brings up a keyboard, which explicitly shows '@' sign on it. You don't have to search around for it.
-              decoration: InputDecoration(
-                  labelText: 'Email',
-                  hintText: 'Email',
-                  prefixIcon: const Icon(Icons.email),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide: const BorderSide(color: Colors.grey)),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 3.0)),
-              onFieldSubmitted: (value) {
-                Utils.fieldFocusChange(context, emailFocusNode, passFocusNode);
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: TextFormField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                focusNode:
+                    emailFocusNode, //It brings up a keyboard, which explicitly shows '@' sign on it. You don't have to search around for it.
+                decoration: InputDecoration(
+                    labelText: 'Email',
+                    hintText: 'Email',
+                    prefixIcon: const Icon(Icons.email),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: const BorderSide(color: Colors.grey)),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 3.0)),
+                onFieldSubmitted: (value) {
+                  Utils.fieldFocusChange(
+                      context, emailFocusNode, passFocusNode);
+                },
+              ),
             ), // Email
+            const SizedBox(
+              height: 20.0,
+            ),
             ValueListenableBuilder(
                 valueListenable: _obscurePass,
                 builder: (context, value, child) {
-                  return TextFormField(
-                    controller: _passController,
-                    obscureText: _obscurePass.value,
-                    obscuringCharacter: '*',
-                    focusNode: passFocusNode,
-                    decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'Password',
-                        prefixIcon: const Icon(Icons.lock_outline_sharp),
-                        suffixIcon: InkWell(
-                          onTap: () {
-                            _obscurePass.value = !_obscurePass.value;
-                          },
-                          child: Icon(_obscurePass.value
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            borderSide: const BorderSide(color: Colors.grey)),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 3.0)),
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: TextFormField(
+                      controller: _passController,
+                      obscureText: _obscurePass.value,
+                      obscuringCharacter: '*',
+                      focusNode: passFocusNode,
+                      decoration: InputDecoration(
+                          labelText: 'Password',
+                          hintText: 'Password',
+                          prefixIcon: const Icon(Icons.lock_outline_sharp),
+                          suffixIcon: InkWell(
+                            onTap: () {
+                              _obscurePass.value = !_obscurePass.value;
+                            },
+                            child: Icon(_obscurePass.value
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: const BorderSide(color: Colors.grey)),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 3.0)),
+                    ),
                   );
                 }),
             //Pass,
-            SizedBox(height: height * .1),
+            SizedBox(height: 20.0),
             RoundButton(
               title: 'Sign Up',
               loading: authViewMode.signUpLoading,
@@ -107,20 +118,30 @@ class _SignUpPageState extends State<SignUpPage> {
                       context);
                 } else {
                   Map data = {
-                    'email': _emailController.text.toString(),
-                    'password': _passController.text.toString(),
+                    'email': 'eve.holt@reqres.in',
+                    'password': 'pistol',
                   };
                   authViewMode.signUpApi(data, context);
                   print("Api Hit");
                 }
               },
             ),
-            SizedBox(height: height * 0.005),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, RoutesName.login);
-              },
-              child: const Text("Already have an account ? Login"),
+            SizedBox(height: height * 0.010),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text("Already have an account? "),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, RoutesName.login);
+                  },
+                  child: const Text(
+                    "Login here",
+                    style: TextStyle(color: Colors.deepPurple),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
